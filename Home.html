@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giramata's Portfolio - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%, #1a1a1a 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== CUSTOM CURSOR ===== */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00a8ff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease-out;
+            box-shadow: 0 0 10px rgba(0, 168, 255, 0.6), inset 0 0 10px rgba(0, 168, 255, 0.3);
+        }
+
+        .cursor::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00a8ff;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 8px #00a8ff;
+        }
+
+        .cursor.active {
+            width: 40px;
+            height: 40px;
+            border-width: 3px;
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.8), inset 0 0 15px rgba(0, 168, 255, 0.5);
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #1ec9ff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.6;
+            box-shadow: 0 0 6px #1ec9ff;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #00a8ff;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 15px rgba(0, 168, 255, 0.2);
+            align-items: center;
+        }
+
+        nav a {
+            color: #00a8ff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #00a8ff;
+            color: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
+        }
+
+        /* ===== PAGE SECTIONS ===== */
+        .page {
+            display: none;
+            padding: 40px 30px;
+            min-height: calc(100vh - 80px);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-content {
+            background: linear-gradient(135deg, rgba(25, 25, 25, 0.95) 0%, rgba(45, 45, 45, 0.95) 100%);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 8px 32px rgba(0, 168, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            max-width: 1200px;
+            margin: 0 auto;
+            border: 2px solid #00a8ff;
+        }
+
+        /* ===== HOME PAGE HERO SECTION ===== */
+        .hero-section {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .hero-title {
+            color: #00a8ff;
+            font-size: 56px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(0, 168, 255, 0.4), 0 0 40px rgba(0, 168, 255, 0.2);
+            letter-spacing: 2px;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== PROFILE PICTURE ===== */
+        .profile-picture {
+            width: 280px;
+            height: 280px;
+            margin: 40px auto;
+            border: 4px solid #00a8ff;
+            box-shadow: 0 0 30px rgba(0, 168, 255, 0.5), inset 0 0 20px rgba(0, 168, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            overflow: hidden;
+            border-radius: 50%;
+            animation: zoomIn 0.8s ease 0.2s both;
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== HERO SUBTITLE ===== */
+        .hero-subtitle {
+            font-size: 32px;
+            color: #1ec9ff;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 0 0 15px rgba(0, 168, 255, 0.4);
+            animation: fadeIn 0.8s ease 0.4s both;
+        }
+
+        /* ===== HERO DESCRIPTION ===== */
+        .hero-description {
+            font-size: 18px;
+            color: #c0c0c0;
+            text-align: center;
+            margin: 30px auto;
+            background: linear-gradient(135deg, rgba(0, 168, 255, 0.1) 0%, rgba(30, 201, 255, 0.05) 100%);
+            padding: 30px 40px;
+            border-radius: 15px;
+            border-left: 5px solid #00a8ff;
+            border-right: 5px solid #1ec9ff;
+            max-width: 700px;
+            line-height: 1.8;
+            animation: fadeIn 0.8s ease 0.6s both;
+        }
+
+        /* ===== CTA BUTTONS ===== */
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            animation: fadeIn 0.8s ease 0.8s both;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s ease;
+            cursor: pointer;
+            border: 2px solid #00a8ff;
+        }
+
+        .cta-btn.primary {
+            background: linear-gradient(135deg, #00a8ff, #1ec9ff);
+            color: #1a1a1a;
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.4);
+        }
+
+        .cta-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 168, 255, 0.6);
+            background: linear-gradient(135deg, #1ec9ff, #00a8ff);
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            color: #00a8ff;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        .cta-btn.secondary:hover {
+            background: rgba(0, 168, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 168, 255, 0.5);
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid rgba(0, 168, 255, 0.3);
+        }
+
+        .features-title {
+            color: #00a8ff;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(50, 50, 50, 0.9) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 168, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: 0.3s ease;
+            border: 2px solid #00a8ff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 168, 255, 0.1), transparent);
+            transition: 0.5s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 168, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: #1ec9ff;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #00a8ff;
+            font-size: 20px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 168, 255, 0.2);
+        }
+
+        .feature-card p {
+            color: #d0d0d0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(0, 168, 255, 0.1) 0%, rgba(30, 201, 255, 0.05) 100%);
+            border-radius: 15px;
+            border: 2px solid rgba(0, 168, 255, 0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            color: #1ec9ff;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 168, 255, 0.3);
+        }
+
+        .stat-label {
+            color: #00a8ff;
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #00a8ff;
+            margin-top: 40px;
+            border-top: 2px solid #00a8ff;
+            text-shadow: 0 0 10px rgba(0, 168, 255, 0.2);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%, #1a1a1a 100%);
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 24px;
+            }
+
+            .page-content {
+                padding: 20px;
+            }
+
+            .profile-picture {
+                width: 220px;
+                height: 220px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+                padding: 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .cta-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            nav {
+                gap: 10px;
+                padding: 10px 15px;
+                flex-direction: column;
+            }
+
+            nav a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a onclick="showPage('home')" class="nav-link active">Home</a>
+        <a onclick="showPage('about')" class="nav-link">About Me</a>
+        <a onclick="showPage('websites')" class="nav-link">Websites</a>
+        <a onclick="showPage('projects')" class="nav-link">Projects</a>
+        <a onclick="showPage('contact')" class="nav-link">Contact</a>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="page-content">
+            <!-- HERO SECTION -->
+            <div class="hero-section">
+                <h1 class="hero-title">⭐ Giramata Caroline Anna Pollet</h1>
+                
+                <!-- PROFILE PICTURE -->
+                <div class="profile-picture">
+                    <img src="https://i.postimg.cc/d1VT4qLp/1D3A5191.jpg" alt="Giramata's Profile Picture">
+                </div>
+
+                <p class="hero-subtitle">Web Developer & STEM Enthusiast</p>
+                
+                <p class="hero-description">
+                    I am a passionate student learning web development and creating beautiful, functional websites. 
+                    I combine my love for technology with creative design to build amazing digital experiences that make a difference.
+                </p>
+
+                <!-- CTA BUTTONS -->
+                <div class="cta-buttons">
+                    <a onclick="showPage('about')" class="cta-btn primary">Learn More About Me →</a>
+                    <a onclick="showPage('projects')" class="cta-btn secondary">View My Projects</a>
+                </div>
+            </div>
+
+            <!-- FEATURES SECTION -->
+            <div class="features-section">
+                <h2 class="features-title">What I Offer 🎯</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">💻</div>
+                        <h3>Web Development</h3>
+                        <p>Building responsive and interactive websites using HTML, CSS, and JavaScript with modern design principles.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>UI/UX Design</h3>
+                        <p>Creating beautiful and user-friendly interfaces that provide excellent user experiences and engagement.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Responsive Design</h3>
+                        <p>Designing websites that work perfectly on all devices - mobile, tablet, and desktop screens.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Problem Solving</h3>
+                        <p>Using logical thinking and creativity to solve complex problems and build innovative solutions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Innovation</h3>
+                        <p>Always learning new technologies and techniques to stay ahead in the fast-paced tech world.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎓</div>
+                        <h3>Continuous Learning</h3>
+                        <p>Passionate about education and self-improvement, always exploring new skills and knowledge.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATS SECTION -->
+            <div class="stats-section">
+                <h2 class="features-title">My Journey 📊</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Dedication</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Languages</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Passion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 Giramata Caroline Anna Pollet. All rights reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // PAGE NAVIGATION FUNCTION
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            const activeLink = document.querySelector(`a[onclick="showPage('${pageId}')"]`);
+            if (activeLink) activeLink.classList.add('active');
+
+            window.scrollTo(0, 0);
+        }
+
+        // CUSTOM CURSOR FUNCTIONALITY
+        const cursor = document.getElementById('cursor');
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+
+            requestAnimationFrame(animateCursor);
+        }
+
+        animateCursor();
+
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.8) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                document.body.appendChild(trail);
+
+                setTimeout(() => {
+                    trail.style.opacity = '0';
+                    trail.style.transform = 'scale(0)';
+                    trail.style.transition = 'all 0.6s ease-out';
+                }, 10);
+
+                setTimeout(() => trail.remove(), 600);
+            }
+        });
+
+        const clickableElements = document.querySelectorAll('a, button, .cta-btn, nav a');
+        clickableElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+            });
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

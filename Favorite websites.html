@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giramata's Portfolio - Websites</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%, #1a1a1a 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #00a8ff;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 15px rgba(0, 168, 255, 0.2);
+            align-items: center;
+        }
+
+        nav a {
+            color: #00a8ff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #00a8ff;
+            color: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
+        }
+
+        /* ===== PAGE CONTENT ===== */
+        .page-content {
+            background: linear-gradient(135deg, rgba(25, 25, 25, 0.95) 0%, rgba(45, 45, 45, 0.95) 100%);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 8px 32px rgba(0, 168, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            max-width: 1200px;
+            margin: 40px auto;
+            border: 2px solid #00a8ff;
+        }
+
+        h1 {
+            color: #00a8ff;
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(0, 168, 255, 0.4), 0 0 40px rgba(0, 168, 255, 0.2);
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #00a8ff;
+            font-size: 36px;
+            margin-bottom: 30px;
+            margin-top: 40px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+            border-bottom: 3px solid #00a8ff;
+            padding-bottom: 15px;
+        }
+
+        h3 {
+            color: #1ec9ff;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #d0d0d0;
+            margin-bottom: 15px;
+        }
+
+        /* ===== CAROUSEL ===== */
+        .carousel-container {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 168, 255, 0.2);
+            border: 2px solid #00a8ff;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            background: rgba(30, 30, 30, 0.9);
+        }
+
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: slideIn 0.6s ease-in-out;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .carousel-slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .carousel-slide .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .carousel-slide h3 {
+            color: #00a8ff;
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        .carousel-slide p {
+            color: #d0d0d0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Carousel Controls */
+        .carousel-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0, 168, 255, 0.4);
+            cursor: pointer;
+            transition: 0.3s ease;
+            border: 2px solid #00a8ff;
+        }
+
+        .carousel-dot.active {
+            background: #00a8ff;
+            box-shadow: 0 0 10px #00a8ff;
+            transform: scale(1.3);
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 168, 255, 0.3);
+            color: #00a8ff;
+            border: 2px solid #00a8ff;
+            padding: 12px 18px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-button:hover {
+            background: #00a8ff;
+            color: #1a1a1a;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.6);
+        }
+
+        .carousel-button.prev {
+            left: 15px;
+        }
+
+        .carousel-button.next {
+            right: 15px;
+        }
+
+        /* ===== VISIT BUTTON ===== */
+        .visit-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #00a8ff, #1ec9ff);
+            color: #1a1a1a;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s ease;
+            border: 2px solid #00a8ff;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        .visit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 168, 255, 0.5);
+            background: linear-gradient(135deg, #1ec9ff, #00a8ff);
+        }
+
+        /* ===== CARDS CONTAINER ===== */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .website-card {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(50, 50, 50, 0.9) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 168, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: 0.3s ease;
+            border: 2px solid #00a8ff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .website-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 168, 255, 0.1), transparent);
+            transition: 0.5s ease;
+        }
+
+        .website-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 168, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: #1ec9ff;
+        }
+
+        .website-card:hover::before {
+            left: 100%;
+        }
+
+        .website-card h4 {
+            color: #00a8ff;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .website-card p {
+            color: #d0d0d0;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .website-card .visit-btn {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #00a8ff;
+            margin-top: 40px;
+            border-top: 2px solid #00a8ff;
+            text-shadow: 0 0 10px rgba(0, 168, 255, 0.2);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%, #1a1a1a 100%);
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .page-content {
+                padding: 20px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                gap: 10px;
+                padding: 10px 15px;
+                flex-direction: column;
+            }
+
+            nav a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .carousel {
+                height: 350px;
+            }
+
+            .carousel-slide {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Me</a>
+        <a href="websites.html" class="active">Websites</a>
+        <a href="projects.html">Projects</a>
+        <a href="inspiration.html">Inspiration</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- WEBSITES PAGE -->
+    <div class="page-content">
+        <h1>My Favorite Websites 🌐</h1>
+        <p style="text-align: center; color: #1ec9ff; margin-bottom: 30px;">Check out these amazing websites that inspire and help me learn!</p>
+
+        <!-- WEBSITES CAROUSEL -->
+        <div class="carousel-container">
+            <div class="carousel">
+                <div class="carousel-slide active">
+                    <div class="emoji">🔍</div>
+                    <h3>Google</h3>
+                    <p>I like Google because it helps me to search and get information for different things. It's the most powerful search engine in the world!</p>
+                    <a href="https://www.google.com" target="_blank" class="visit-btn">Visit Google →</a>
+                </div>
+                <div class="carousel-slide">
+                    <div class="emoji">📖</div>
+                    <h3>Wikipedia</h3>
+                    <p>I use Wikipedia for learning and get brief information about a topic I am working on. It's a great resource for research and knowledge!</p>
+                    <a href="https://www.wikipedia.org" target="_blank" class="visit-btn">Visit Wikipedia →</a>
+                </div>
+                <div class="carousel-slide">
+                    <div class="emoji">💻</div>
+                    <h3>CodePen</h3>
+                    <p>I like using CodePen to practice coding and learn how to create your own portfolio website. It's perfect for web development learning!</p>
+                    <a href="https://codepen.io" target="_blank" class="visit-btn">Visit CodePen →</a>
+                </div>
+                <button class="carousel-button prev" onclick="changeSlide(-1)">❮</button>
+                <button class="carousel-button next" onclick="changeSlide(1)">❯</button>
+            </div>
+            <div class="carousel-controls">
+                <span class="carousel-dot active" onclick="currentSlide(0)"></span>
+                <span class="carousel-dot" onclick="currentSlide(1)"></span>
+                <span class="carousel-dot" onclick="currentSlide(2)"></span>
+            </div>
+        </div>
+
+        <!-- WEBSITES CARDS -->
+        <h2>Why I Love These Websites 💡</h2>
+        <div class="cards-container">
+            <div class="website-card">
+                <h4>🔍 Google - Search Everything</h4>
+                <p>Google is my go-to website for finding information on any topic. Whether I'm researching for school projects or learning new skills, Google helps me find exactly what I need in seconds.</p>
+                <a href="https://www.google.com" target="_blank" class="visit-btn">Explore →</a>
+            </div>
+            <div class="website-card">
+                <h4>📖 Wikipedia - Knowledge Hub</h4>
+                <p>Wikipedia is an amazing free encyclopedia with information about almost everything. I use it to understand complex topics and get reliable information for my studies and projects.</p>
+                <a href="https://www.wikipedia.org" target="_blank" class="visit-btn">Explore →</a>
+            </div>
+            <div class="website-card">
+                <h4>💻 CodePen - Code Playground</h4>
+                <p>CodePen is where I practice my web development skills. I can write HTML, CSS, and JavaScript code and see the results instantly. It's perfect for learning and experimenting with new ideas!</p>
+                <a href="https://codepen.io" target="_blank" class="visit-btn">Explore →</a>
+            </div>
+        </div>
+
+        <!-- ADDITIONAL WEBSITES -->
+        <h2>Other Useful Websites 🌟</h2>
+        <div class="cards-container">
+            <div class="website-card">
+                <h4>📚 Khan Academy</h4>
+                <p>Khan Academy offers free educational videos and exercises on various subjects. It's a great resource for learning math, science, and other subjects at your own pace.</p>
+                <a href="https://www.khanacademy.org" target="_blank" class="visit-btn">Visit →</a>
+            </div>
+            <div class="website-card">
+                <h4>🎓 Coursera</h4>
+                <p>Coursera provides online courses from top universities and companies. I can learn new skills and even earn certificates to showcase my achievements.</p>
+                <a href="https://www.coursera.org" target="_blank" class="visit-btn">Visit →</a>
+            </div>
+            <div class="website-card">
+                <h4>🎨 Canva</h4>
+                <p>Canva is a design tool that makes it easy to create beautiful graphics, presentations, and designs without needing advanced design skills.</p>
+                <a href="https://www.canva.com" target="_blank" class="visit-btn">Visit →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 Giramata Caroline Anna Pollet. All rights reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // CAROUSEL FUNCTIONALITY
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        function changeSlide(n) {
+            currentIndex += n;
+            if (currentIndex >= slides.length) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = slides.length - 1;
+            showSlide();
+        }
+
+        function currentSlide(n) {
+            currentIndex = n;
+            showSlide();
+        }
+
+        function showSlide() {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            slides[currentIndex].classList.add('active');
+            dots[currentIndex].classList.add('active');
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

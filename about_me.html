@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giramata's Portfolio - About Me</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%, #1a1a1a 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #00a8ff;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 15px rgba(0, 168, 255, 0.2);
+            align-items: center;
+        }
+
+        nav a {
+            color: #00a8ff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #00a8ff;
+            color: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.5);
+        }
+
+        /* ===== PAGE CONTENT ===== */
+        .page-content {
+            background: linear-gradient(135deg, rgba(25, 25, 25, 0.95) 0%, rgba(45, 45, 45, 0.95) 100%);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 8px 32px rgba(0, 168, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            max-width: 1200px;
+            margin: 40px auto;
+            border: 2px solid #00a8ff;
+        }
+
+        h1 {
+            color: #00a8ff;
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(0, 168, 255, 0.4), 0 0 40px rgba(0, 168, 255, 0.2);
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #00a8ff;
+            font-size: 36px;
+            margin-bottom: 30px;
+            margin-top: 40px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+            border-bottom: 3px solid #00a8ff;
+            padding-bottom: 15px;
+        }
+
+        h3 {
+            color: #1ec9ff;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #d0d0d0;
+            margin-bottom: 15px;
+        }
+
+        /* ===== CAROUSEL ===== */
+        .carousel-container {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 168, 255, 0.2);
+            border: 2px solid #00a8ff;
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: rgba(30, 30, 30, 0.9);
+        }
+
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: slideIn 0.6s ease-in-out;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .carousel-slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .carousel-slide .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .carousel-slide h3 {
+            color: #00a8ff;
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+        }
+
+        .carousel-slide p {
+            color: #d0d0d0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Carousel Controls */
+        .carousel-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0, 168, 255, 0.4);
+            cursor: pointer;
+            transition: 0.3s ease;
+            border: 2px solid #00a8ff;
+        }
+
+        .carousel-dot.active {
+            background: #00a8ff;
+            box-shadow: 0 0 10px #00a8ff;
+            transform: scale(1.3);
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 168, 255, 0.3);
+            color: #00a8ff;
+            border: 2px solid #00a8ff;
+            padding: 12px 18px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-button:hover {
+            background: #00a8ff;
+            color: #1a1a1a;
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.6);
+        }
+
+        .carousel-button.prev {
+            left: 15px;
+        }
+
+        .carousel-button.next {
+            right: 15px;
+        }
+
+        /* ===== CARDS CONTAINER ===== */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(50, 50, 50, 0.9) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 168, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: 0.3s ease;
+            border: 2px solid #00a8ff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 168, 255, 0.1), transparent);
+            transition: 0.5s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 168, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: #1ec9ff;
+        }
+
+        .info-card:hover::before {
+            left: 100%;
+        }
+
+        .info-card h4 {
+            color: #00a8ff;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            color: #d0d0d0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #00a8ff;
+            margin-top: 40px;
+            border-top: 2px solid #00a8ff;
+            text-shadow: 0 0 10px rgba(0, 168, 255, 0.2);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%, #1a1a1a 100%);
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .page-content {
+                padding: 20px;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                gap: 10px;
+                padding: 10px 15px;
+                flex-direction: column;
+            }
+
+            nav a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .carousel {
+                height: 300px;
+            }
+
+            .carousel-slide {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About Me</a>
+        <a href="websites.html">Websites</a>
+        <a href="projects.html">Projects</a>
+        <a href="inspiration.html">Inspiration</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- ABOUT ME PAGE -->
+    <div class="page-content">
+        <h1>About Me 👤</h1>
+
+        <!-- ABOUT CAROUSEL -->
+        <div class="carousel-container">
+            <div class="carousel">
+                <div class="carousel-slide active">
+                    <div class="emoji">👤</div>
+                    <h3>Who I Am</h3>
+                    <p>My name is Giramata Caroline Anna Pollet. I am a student at Ntare Louisenlund School, passionate about learning and growing every day.</p>
+                </div>
+                <div class="carousel-slide">
+                    <div class="emoji">💻</div>
+                    <h3>What I Do</h3>
+                    <p>I am learning web development, combining my passion for technology with creative design to build amazing digital experiences.</p>
+                </div>
+                <div class="carousel-slide">
+                    <div class="emoji">🚀</div>
+                    <h3>My Journey</h3>
+                    <p>I'm on an exciting journey of learning HTML, CSS, and JavaScript to become a skilled web developer and create projects that make a difference.</p>
+                </div>
+                <button class="carousel-button prev" onclick="changeSlide(-1)">❮</button>
+                <button class="carousel-button next" onclick="changeSlide(1)">❯</button>
+            </div>
+            <div class="carousel-controls">
+                <span class="carousel-dot active" onclick="currentSlide(0)"></span>
+                <span class="carousel-dot" onclick="currentSlide(1)"></span>
+                <span class="carousel-dot" onclick="currentSlide(2)"></span>
+            </div>
+        </div>
+
+        <!-- FAVORITE SUBJECTS -->
+        <h2>My Favorite Subjects 📚</h2>
+        <div class="cards-container">
+            <div class="info-card">
+                <h4>📐 Mathematics</h4>
+                <p>It is very interesting and I love it because it is fun and is very easy. It helps me develop problem-solving skills.</p>
+            </div>
+            <div class="info-card">
+                <h4>📖 English</h4>
+                <p>I love it because it is very fun and inspiring when talking about new words. It helps me express myself better.</p>
+            </div>
+            <div class="info-card">
+                <h4>🔬 Science</h4>
+                <p>I like studying science because it helps me know more about living things and discover more about the world.</p>
+            </div>
+        </div>
+
+        <!-- FAVORITE HOBBIES -->
+        <h2>My Favorite Hobbies 🎯</h2>
+        <div class="carousel-container">
+            <div class="carousel">
+                <div class="carousel-slide active">
+                    <div class="emoji">🏀</div>
+                    <h3>Basketball</h3>
+                    <p>I love playing basketball because it keeps me active and healthy. It's my favorite sport!</p>
+                </div>
+                <div class="carousel-slide">
+                    <div class="emoji">🏊</div>
+                    <h3>Swimming</h3>
+                    <p>Swimming is fun and helps me stay fit and strong. I enjoy the water!</p>
+                </div>
+                <div class="carousel-slide">
+                    <div class="emoji">♟️</div>
+                    <h3>Chess</h3>
+                    <p>Chess helps me develop strategic thinking and problem-solving skills. It's a great mental exercise!</p>
+                </div>
+                <button class="carousel-button prev" onclick="changeSlide2(-1)">❮</button>
+                <button class="carousel-button next" onclick="changeSlide2(1)">❯</button>
+            </div>
+            <div class="carousel-controls">
+                <span class="carousel-dot active" onclick="currentSlide2(0)"></span>
+                <span class="carousel-dot" onclick="currentSlide2(1)"></span>
+                <span class="carousel-dot" onclick="currentSlide2(2)"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 Giramata Caroline Anna Pollet. All rights reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // CAROUSEL 1 - About Me
+        let currentIndex1 = 0;
+        const slides1 = document.querySelectorAll('.carousel-container:first-of-type .carousel-slide');
+        const dots1 = document.querySelectorAll('.carousel-container:first-of-type .carousel-dot');
+
+        function changeSlide(n) {
+            currentIndex1 += n;
+            if (currentIndex1 >= slides1.length) currentIndex1 = 0;
+            if (currentIndex1 < 0) currentIndex1 = slides1.length - 1;
+            showSlide1();
+        }
+
+        function currentSlide(n) {
+            currentIndex1 = n;
+            showSlide1();
+        }
+
+        function showSlide1() {
+            slides1.forEach(slide => slide.classList.remove('active'));
+            dots1.forEach(dot => dot.classList.remove('active'));
+            slides1[currentIndex1].classList.add('active');
+            dots1[currentIndex1].classList.add('active');
+        }
+
+        // CAROUSEL 2 - Hobbies
+        let currentIndex2 = 0;
+        const slides2 = document.querySelectorAll('.carousel-container:last-of-type .carousel-slide');
+        const dots2 = document.querySelectorAll('.carousel-container:last-of-type .carousel-dot');
+
+        function changeSlide2(n) {
+            currentIndex2 += n;
+            if (currentIndex2 >= slides2.length) currentIndex2 = 0;
+            if (currentIndex2 < 0) currentIndex2 = slides2.length - 1;
+            showSlide2();
+        }
+
+        function currentSlide2(n) {
+            currentIndex2 = n;
+            showSlide2();
+        }
+
+        function showSlide2() {
+            slides2.forEach(slide => slide.classList.remove('active'));
+            dots2.forEach(dot => dot.classList.remove('active'));
+            slides2[currentIndex2].classList.add('active');
+            dots2[currentIndex2].classList.add('active');
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
